@@ -1,8 +1,9 @@
 ﻿  Table.cpp
-C:\Users\Наталия\source\repos\MyTable\Table.cpp(135,12): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Наталия\source\repos\MyTable\Table.cpp(138,13): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Наталия\source\repos\MyTable\Table.cpp(148,14): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Наталия\source\repos\MyTable\Table.cpp(151,15): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Наталия\source\repos\MyTable\Table.cpp(185,14): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Наталия\source\repos\MyTable\Table.cpp(188,15): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable\Table.cpp(138,12): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable\Table.cpp(141,13): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable\Table.cpp(152,14): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable\Table.cpp(155,15): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable\Table.cpp(190,14): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable\Table.cpp(193,15): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable\Table.cpp(242,21): warning C4018: '<': signed/unsigned mismatch
   MyTable.vcxproj -> C:\Users\Наталия\source\repos\MyTable\Debug\MyTable.exe

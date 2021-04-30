@@ -50,39 +50,42 @@ private:
 
 	Node* head;
 
+	int NodeCounter;
+
 public:
 	Psevdo_HList()
 	{
 		head = nullptr;
+		NodeCounter = 0;
 	}
 
 	~Psevdo_HList()
 	{
 		if (head != nullptr)
 		{
-			while(1)
+			while (1)
 			{
-				if(head->pDown == nullptr && head->pNext == nullptr)
+				if (head->pDown == nullptr && head->pNext == nullptr)
 				{
 					break;
 				}
 				Node* current = head;
 				Node* prev = head;
 
-				while(current->pNext != nullptr)
+				while (current->pNext != nullptr)
 				{
 					current = current->pNext;
-					if(current->pNext != nullptr)
+					if (current->pNext != nullptr)
 					{
 						prev = prev->pNext;
 					}
 				}
-				while(current->pDown != nullptr)
+				while (current->pDown != nullptr)
 				{
-					if(prev == head && current == head)
+					if (prev == head && current == head)
 					{
 						current = current->pDown;
-						if(current->pDown != nullptr)
+						if (current->pDown != nullptr)
 						{
 							current = current->pDown;
 						}
@@ -112,7 +115,7 @@ public:
 					}
 				}
 				delete current;
-				if(prev->pNext == nullptr)
+				if (prev->pNext == nullptr)
 				{
 					prev->pDown = nullptr;
 				}
@@ -135,7 +138,7 @@ public:
 		while (j < data.length())
 		{
 			string str1 = string();
-			while (j < data.length() && data[j] != '\n' )
+			while (j < data.length() && data[j] != '\n')
 			{
 				str1.push_back(data[j]);
 				j++;
@@ -143,6 +146,7 @@ public:
 			j++;
 			if (head == nullptr)
 			{
+				NodeCounter++;
 				int i = 0;
 				bool proverka1 = true;
 				while (i < str1.length())
@@ -175,6 +179,7 @@ public:
 			}
 			else
 			{
+				NodeCounter++;
 				Node* current = head;
 				while (current->pNext != nullptr)
 				{
@@ -217,9 +222,9 @@ public:
 	{
 		Node* current = head;
 		Node* current1 = head;
-		while(current != nullptr)
+		while (current != nullptr)
 		{
-			while(current != nullptr)
+			while (current != nullptr)
 			{
 				cout << current->data << " ";
 				current = current->pDown;
@@ -233,85 +238,147 @@ public:
 
 	void Removing(string name)
 	{
-		Node* current = head;
-		Node* prev = head;
-		while (current->data != name)
+		bool iskeyNumber = true;
+		for (int i = 0; i < name.length(); i++)
 		{
-			current = current->pNext;
-			if (prev->pNext != current)
+			if (name[i] < '0' || name[i] > '9')
 			{
-				prev = prev->pNext;
+				iskeyNumber = false;
 			}
 		}
-		if (head->data == name)
+		if (iskeyNumber)
 		{
-			while (1)
+			int keyNumber = stoi(name);
+			if (keyNumber < 0 || keyNumber > NodeCounter - 1)
 			{
-				if (head->pDown == nullptr)
+				cout << "Выход за массив" << endl;
+				return void();
+			}
+			int i = 0;
+			Node* prev = head;
+			Node* current = head;
+			while (i < NodeCounter)
+			{
+				if (i == keyNumber)
 				{
-					break;
+					if (i == 0)
+					{
+
+						head = head->pNext;
+						delete current;
+						return void();
+					}
+					prev->pNext = current->pNext;
+					delete current;
+					return void();
 				}
-				Node* current1 = head;
-				Node* prev1 = head;
-				while (current1->pDown != nullptr)
+				current = current->pNext;
+				if (current == nullptr)
 				{
-					current1 = current1->pDown;
-					if (current1->pDown != nullptr)
+					cout << "net чела" << endl;
+					return void();
+				}
+				if (prev->pNext != current)
+				{
+					prev = prev->pNext;
+				}
+				i++;
+			}
+			return void();
+		}
+		else
+		{
+
+			Node* current = head;
+			Node* prev = head;
+			while (current->data != name)
+			{
+
+				current = current->pNext;
+				if (prev->pNext != current)
+				{
+					prev = prev->pNext;
+				}
+
+				if (current == nullptr)
+				{
+					cout << "Такого человека нет в списке!" << endl;
+					return void();
+				}
+			}
+			if (head->data == name)
+			{
+				while (1)
+				{
+					if (head->pDown == nullptr)
+					{
+						break;
+					}
+					Node* current1 = head;
+					Node* prev1 = head;
+					while (current1->pDown != nullptr)
 					{
 						current1 = current1->pDown;
+						if (current1->pDown != nullptr)
+						{
+							current1 = current1->pDown;
+						}
+						if (prev1->pDown != current1)
+						{
+							prev1 = prev1->pDown;
+						}
 					}
-					if (prev1->pDown != current1)
-					{
-						prev1 = prev1->pDown;
-					}
+					delete current1;
+					prev1->pDown = nullptr;
 				}
-				delete current1;
-				prev1->pDown = nullptr;
+				Node* temp = head;
+				head = head->pNext;
+				delete temp;
 			}
-			Node* temp = head;
-			head = head->pNext;
-			delete temp;
-		}
-		else if (current->data == name)
-		{
-			while(1)
+			else if (current->data == name)
 			{
-				if (current->pDown == nullptr)
+				while (1)
 				{
-					break;
-				}
-				Node* current2 = current;
-				Node* prev2 = current;
-				while (current2->pDown != nullptr)
-				{
-					current2 = current2->pDown;
-					if (current2->pDown != nullptr)
+					if (current->pDown == nullptr)
+					{
+						break;
+					}
+					Node* current2 = current;
+					Node* prev2 = current;
+					while (current2->pDown != nullptr)
 					{
 						current2 = current2->pDown;
+						if (current2->pDown != nullptr)
+						{
+							current2 = current2->pDown;
+						}
+						if (prev2->pDown != current2)
+						{
+							prev2 = prev2->pDown;
+						}
 					}
-					if (prev2->pDown != current2)
-					{
-						prev2 = prev2->pDown;
-					}
+					delete current2;
+					prev2->pDown = nullptr;
 				}
-				delete current2;
-				prev2->pDown = nullptr;
+				Node* toDelete = current;
+				prev->pNext = toDelete->pNext;
+				delete toDelete;
 			}
-			Node* toDelete = current;
-			prev->pNext = toDelete->pNext;
-			delete toDelete;
 		}
+	}
+
+	void Finding(string name)
+	{
+
 	}
 };
 
 class Table
 {
 public:
-	Table();
-	~Table();
 	virtual void insert(string str) = 0;
-	virtual string find(string key) = 0;
-	virtual bool del(string key) = 0;
+	virtual void find(string key) = 0;
+	virtual void del(string key) = 0;
 	//virtual void Prototype(Psevdo_HList& value) // Нужна была чтобы мы увидили что для всех ф-ций из класса предоставляется доступ к private полям Psevdo_HList
 	//{
 	//	
@@ -322,19 +389,50 @@ protected:
 };
 
 
+class ScanTable : public Table
+{
+public:
+	ScanTable()
+	{
+		Phl.Push_Back(TableReading());
+		Phl.Print();
+		cout << "---------------------------------------" << endl;
+	}
+	void insert(string str) override
+	{
+		Phl.Push_Back(str);
+		Phl.Print();
+	}
+	void find(string key) override
+	{
+		
+	}
+	void del(string key) override
+	{
+		Phl.Removing(key);
+		Phl.Print();
+	}
+};
+
+
 
 int main()
 {
 	setlocale(LC_ALL, "ru");
 
-	//cout << TableReading() << endl;
-	Psevdo_HList a;
-	a.Push_Back(TableReading());
-	
-	a.Print();
-	cout << "---------------------------------------" << endl;
-	a.Removing("Захаров Алексей");
-	a.Print();
+	////cout << TableReading() << endl;
+	//Psevdo_HList a;
+	//a.Push_Back(TableReading());
+
+	//a.Print();
+	//cout << "---------------------------------------" << endl;
+	//a.Removing("Захаров Алексей");
+	//a.Removing("2");
+	//a.Print();
+
+	ScanTable a;
+	//a.del("2");
+	a.insert("Куматов Михаил/Англ 4/Матеша 5/Русский 2");
 
 	return 0;
 }
