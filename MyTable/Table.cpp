@@ -77,7 +77,6 @@ public:
 						prev = prev->pNext;
 					}
 				}
-				int k = 0;
 				while(current->pDown != nullptr)
 				{
 					if(prev == head && current == head)
@@ -87,9 +86,16 @@ public:
 						{
 							current = current->pDown;
 						}
-						if(prev->pNext == nullptr && current->pDown != nullptr) //добавил условие справа
+						//if(prev->pNext == nullptr && current->pDown != nullptr) //добавил условие справа
+						//{
+						//	prev = prev->pDown;
+						//}
+						if (prev->pNext == nullptr)// && current->pDown != nullptr) //добавил условие справа
 						{
-							prev = prev->pDown;
+							if (prev->pDown != current)
+							{
+								prev = prev->pDown;
+							}
 						}
 					}
 					else
@@ -101,33 +107,21 @@ public:
 						}
 						else
 						{
-							//cout << prev->data << endl;
 							prev = prev->pDown;
 						}
 					}
 				}
-				//Print();
 				delete current;
 				if(prev->pNext == nullptr)
 				{
-					//cout << "1 " << prev->data << endl;
 					prev->pDown = nullptr;
 				}
 				else
 				{
-					//cout << "2 " << endl;
 					prev->pNext = nullptr;
 				}
+				//Print();
 				continue;
-
-				//if (current->pDown != nullptr)
-				//{
-				//	current = current->pDown;
-				//	if(prev->pNext != nullptr) //оно и не будет равно nullptr(костыль?)
-				//	{
-				//		prev = prev->pNext;
-				//	}	 
-				//}
 			}
 			Node* helper = head;
 			delete head;
@@ -236,6 +230,78 @@ public:
 		}
 		//cout << current->data;
 	}
+
+	void Removing(string name)
+	{
+		Node* current = head;
+		Node* prev = head;
+		while (current->data != name)
+		{
+			current = current->pNext;
+			if (prev->pNext != current)
+			{
+				prev = prev->pNext;
+			}
+		}
+		if (head->data == name)
+		{
+			while (1)
+			{
+				if (head->pDown == nullptr)
+				{
+					break;
+				}
+				Node* current1 = head;
+				Node* prev1 = head;
+				while (current1->pDown != nullptr)
+				{
+					current1 = current1->pDown;
+					if (current1->pDown != nullptr)
+					{
+						current1 = current1->pDown;
+					}
+					if (prev1->pDown != current1)
+					{
+						prev1 = prev1->pDown;
+					}
+				}
+				delete current1;
+				prev1->pDown = nullptr;
+			}
+			Node* temp = head;
+			head = head->pNext;
+			delete temp;
+		}
+		else if (current->data == name)
+		{
+			while(1)
+			{
+				if (current->pDown == nullptr)
+				{
+					break;
+				}
+				Node* current2 = current;
+				Node* prev2 = current;
+				while (current2->pDown != nullptr)
+				{
+					current2 = current2->pDown;
+					if (current2->pDown != nullptr)
+					{
+						current2 = current2->pDown;
+					}
+					if (prev2->pDown != current2)
+					{
+						prev2 = prev2->pDown;
+					}
+				}
+				delete current2;
+				prev2->pDown = nullptr;
+			}
+			Node* toDelete = current;
+			prev->pNext = toDelete->pNext;
+			delete toDelete;
+		}
+	}
 };
 
 class Table
@@ -265,6 +331,9 @@ int main()
 	Psevdo_HList a;
 	a.Push_Back(TableReading());
 	
+	a.Print();
+	cout << "---------------------------------------" << endl;
+	a.Removing("Захаров Алексей");
 	a.Print();
 
 	return 0;
