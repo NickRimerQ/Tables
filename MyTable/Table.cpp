@@ -1,6 +1,8 @@
 ﻿#include <iostream>
 #include <string>
 #include <fstream>
+#include <vector>
+#include <list>
 using namespace std;
 
 string TableReading()
@@ -26,11 +28,30 @@ string TableReading()
 	return returner;
 }
 
+void TableRecord(string str)
+{
+	string path = "NewMyFile.txt";
+	ofstream fout;
+	fout.open(path);
+	if(!fout.is_open())
+	{
+		cout << "Ошибка открытия файла!" << endl;
+	}
+	else
+	{
+		fout << str;
+	}
+	fout.close();
+}
+
+
+
 class Table;
 
 class Psevdo_HList
 {
 	friend Table;
+
 
 private:
 	class Node
@@ -63,72 +84,102 @@ public:
 	{
 		if (head != nullptr)
 		{
-			while (1)
+			string STR = string();
+			Node* saverNext = head;
+			Node* saverDown = head;
+			while (saverNext->pNext != nullptr)
 			{
-				if (head->pDown == nullptr && head->pNext == nullptr)
+				saverDown = saverNext;
+				while (saverDown->pDown != nullptr)
 				{
-					break;
+					STR += saverDown->data;
+					STR += '/';
+					saverDown = saverDown->pDown;
 				}
-				Node* current = head;
-				Node* prev = head;
+				STR += saverDown->data;
+				STR += '\n';
+				saverNext = saverNext->pNext;
+			}
+			saverDown = saverNext;
+			while (saverDown->pDown != nullptr)
+			{
+				STR += saverDown->data;
+				STR += '/';
+				saverDown = saverDown->pDown;
+			}
+			STR += saverDown->data;
+			TableRecord(STR);
 
-				while (current->pNext != nullptr)
+
+			if (head != nullptr)
+			{
+				while (1)
 				{
-					current = current->pNext;
-					if (current->pNext != nullptr)
+					if (head->pDown == nullptr && head->pNext == nullptr)
 					{
-						prev = prev->pNext;
+						break;
 					}
-				}
-				while (current->pDown != nullptr)
-				{
-					if (prev == head && current == head)
+					Node* current = head;
+					Node* prev = head;
+
+					while (current->pNext != nullptr)
 					{
-						current = current->pDown;
-						if (current->pDown != nullptr)
+						current = current->pNext;
+						if (current->pNext != nullptr)
+						{
+							prev = prev->pNext;
+						}
+					}
+					while (current->pDown != nullptr)
+					{
+						if (prev == head && current == head)
 						{
 							current = current->pDown;
+							if (current->pDown != nullptr)
+							{
+								current = current->pDown;
+							}
+							//if(prev->pNext == nullptr && current->pDown != nullptr) //добавил условие справа
+							//{
+							//	prev = prev->pDown;
+							//}
+							if (prev->pNext == nullptr)// && current->pDown != nullptr) //добавил условие справа
+							{
+								if (prev->pDown != current)
+								{
+									prev = prev->pDown;
+								}
+							}
 						}
-						//if(prev->pNext == nullptr && current->pDown != nullptr) //добавил условие справа
-						//{
-						//	prev = prev->pDown;
-						//}
-						if (prev->pNext == nullptr)// && current->pDown != nullptr) //добавил условие справа
+						else
 						{
-							if (prev->pDown != current)
+							current = current->pDown;
+							if (prev->pNext != nullptr)
+							{
+								prev = prev->pNext;
+							}
+							else
 							{
 								prev = prev->pDown;
 							}
 						}
 					}
+					delete current;
+					if (prev->pNext == nullptr)
+					{
+						prev->pDown = nullptr;
+					}
 					else
 					{
-						current = current->pDown;
-						if (prev->pNext != nullptr)
-						{
-							prev = prev->pNext;
-						}
-						else
-						{
-							prev = prev->pDown;
-						}
+						prev->pNext = nullptr;
 					}
+					//Print();
+					continue;
 				}
-				delete current;
-				if (prev->pNext == nullptr)
-				{
-					prev->pDown = nullptr;
-				}
-				else
-				{
-					prev->pNext = nullptr;
-				}
-				//Print();
-				continue;
+				Node* helper = head;
+				delete head;
+				helper = nullptr;
 			}
-			Node* helper = head;
-			delete head;
-			helper = nullptr;
 		}
 	}
 
@@ -263,19 +314,69 @@ public:
 				{
 					if (i == 0)
 					{
-
+						while (1)
+						{
+							if (head->pDown == nullptr)
+							{
+								break;
+							}
+							Node* current1 = head;
+							Node* prev1 = head;
+							while (current1->pDown != nullptr)
+							{
+								current1 = current1->pDown;
+								if (current1->pDown != nullptr)
+								{
+									current1 = current1->pDown;
+								}
+								if (prev1->pDown != current1)
+								{
+									prev1 = prev1->pDown;
+								}
+							}
+							delete current1;
+							prev1->pDown = nullptr;
+						}
+						Node* temp = head;
 						head = head->pNext;
-						delete current;
+						delete temp;
 						return void();
 					}
-					prev->pNext = current->pNext;
-					delete current;
-					return void();
+					else
+					{
+						while (1)
+						{
+							if (current->pDown == nullptr)
+							{
+								break;
+							}
+							Node* current2 = current;
+							Node* prev2 = current;
+							while (current2->pDown != nullptr)
+							{
+								current2 = current2->pDown;
+								if (current2->pDown != nullptr)
+								{
+									current2 = current2->pDown;
+								}
+								if (prev2->pDown != current2)
+								{
+									prev2 = prev2->pDown;
+								}
+							}
+							delete current2;
+							prev2->pDown = nullptr;
+						}
+						Node* toDelete = current;
+						prev->pNext = toDelete->pNext;
+						delete toDelete;
+						return void();
+					}
 				}
 				current = current->pNext;
 				if (current == nullptr)
 				{
-					cout << "net чела" << endl;
+					cout << "Такого человека нет в списке!" << endl;
 					return void();
 				}
 				if (prev->pNext != current)
@@ -369,8 +470,163 @@ public:
 
 	void Finding(string name)
 	{
+		bool iskeyNumber = true;
+		for (int i = 0; i < name.length(); i++)
+		{
+			if (name[i] < '0' || name[i] > '9')
+			{
+				iskeyNumber = false;
+			}
+		}
+		if (iskeyNumber)
+		{
+			int keyNumber = stoi(name);
+			if (keyNumber < 0 || keyNumber > NodeCounter - 1)
+			{
+				cout << "Такого человека нет в списке!" << endl;
+				return void();
+			}
+			int i = 0;
+			//Node* prev = head;
+			Node* current = head;
+			while (i < NodeCounter)
+			{
+				if (i == keyNumber)
+				{
+					if (i == 0)
+					{
+						cout << head->data << "/";
+						while (current->pDown != nullptr)
+						{
+							current = current->pDown;
+							if(current->pDown == nullptr)
+							{
+								cout << current->data;
+							}
+							else
+							{
+								cout << current->data << "/";
+							}
+						}
+					}
+					else
+					{
+						cout << current->data << "/";
+						while (current->pDown != nullptr)
+						{
+							current = current->pDown;
+							if (current->pDown == nullptr)
+							{
+								cout << current->data;
+							}
+							else
+							{
+								cout << current->data << "/";
+							}
+						}
+					}
+				}
+				if (current->pNext == nullptr)
+				{
+					break;
+				}
+				current = current->pNext;
+				//if (prev->pNext != current)
+				//{
+				//	prev = prev->pNext;
+				//}
+				i++;
+			}
+			return void();
+		}
+		else
+		{
+
+			Node* current = head;
+			//Node* prev = head;
+			while (current->data != name)
+			{
+
+				current = current->pNext;
+				//if (prev->pNext != current)
+				//{
+				//	prev = prev->pNext;
+				//}
+
+				if (current == nullptr)
+				{
+					cout << "Такого человека нет в списке!" << endl;
+					return void();
+				}
+			}
+			if (head->data == name)
+			{
+				cout << head->data << "/";
+				while (current->pDown != nullptr)
+				{
+					current = current->pDown;
+					if (current->pDown == nullptr)
+					{
+						cout << current->data;
+					}
+					else
+					{
+						cout << current->data << "/";
+					}
+				}
+			}
+			else if (current->data == name)
+			{
+				cout << current->data << "/";
+				while (current->pDown != nullptr)
+				{
+					current = current->pDown;
+					if (current->pDown == nullptr)
+					{
+						cout << current->data;
+					}
+					else
+					{
+						cout << current->data << "/";
+					}
+				}
+			}
+			return void();
+		}
 
 	}
+
+	void Sort()
+	{
+		Node* iCurrent = head;
+		Node* jCurrent = head;
+		for (int i = 0; i < NodeCounter; i++, iCurrent = iCurrent->pNext)
+		{
+			jCurrent = iCurrent->pNext;
+			for (int j = i + 1; j < NodeCounter; j++, jCurrent = jCurrent->pNext)
+			{ 
+				if (iCurrent->data > jCurrent->data)
+				{
+					string helper = iCurrent->data;
+					iCurrent->data = jCurrent->data;
+					jCurrent->data = helper;
+
+					Node* iCurrentDown = iCurrent;
+					Node* jCurrentDown = jCurrent;
+					while (iCurrentDown->pDown != nullptr)
+					{
+						iCurrentDown = iCurrentDown->pDown;
+						jCurrentDown = jCurrentDown->pDown;
+
+						helper = iCurrentDown->data;
+						iCurrentDown->data = jCurrentDown->data;
+						jCurrentDown->data = helper;
+					}
+				}
+			}
+		}
+	}
+
 };
 
 class Table
@@ -381,8 +637,9 @@ public:
 	virtual void del(string key) = 0;
 	//virtual void Prototype(Psevdo_HList& value) // Нужна была чтобы мы увидили что для всех ф-ций из класса предоставляется доступ к private полям Psevdo_HList
 	//{
-	//	
+	//
 	//}
+	
 
 protected:
 	Psevdo_HList Phl;
@@ -395,44 +652,149 @@ public:
 	ScanTable()
 	{
 		Phl.Push_Back(TableReading());
-		Phl.Print();
-		cout << "---------------------------------------" << endl;
+		
 	}
 	void insert(string str) override
 	{
 		Phl.Push_Back(str);
-		Phl.Print();
+		
 	}
 	void find(string key) override
 	{
-		
+		Phl.Finding(key);
+		cout << endl;
 	}
 	void del(string key) override
 	{
 		Phl.Removing(key);
+	}
+	void Print()
+	{
 		Phl.Print();
 	}
 };
 
+class SortTable : public ScanTable
+{
+public:
+	SortTable()
+	{
+		Phl.Sort();
+	}
+	void insert(string str) override
+	{
+		ScanTable::insert(str);
+		Phl.Sort();
+	}
+	void find(string key) override
+	{
+		ScanTable::find(key);
+	
+	}
+	void del(string key) override
+	{
+		ScanTable::del(key);
+	}
+};
 
+
+int HashFunc(string key)
+{
+	int value = toupper(key[0]) - 'А' - 256 + (toupper(key[1]) - 'А' - 256) * 32;
+	return value;
+}
+
+vector<list<string>> table(1024);
+
+class HashTable : public Table
+{
+public:
+	HashTable()
+	{
+		string str = TableReading();
+
+		string fullName = string();
+		string person = string();
+
+		for (int i = 0; i < str.length() + 1; i++)
+		{
+			if (str[i] == '\n' || i == str.length())
+			{
+				table[HashFunc(fullName)].push_front(person);
+				fullName = string();
+				person = string();
+				continue;
+			}
+			person.push_back(str[i]);
+
+			if (fullName.length() != 2 && str[i] >= 'А' && str[i] <= 'Я')
+			{
+				fullName.push_back(str[i]);
+			}
+		}
+	}
+	virtual void insert(string str) override
+	{
+		return void();
+	}
+	virtual void find(string key)
+	{
+		string fullName = string();
+		for (int i = 0; i < key.length(); i++)
+		{
+			if (fullName.length() != 2 && key[i] >= 'А' && key[i] <= 'Я')
+			{
+				fullName.push_back(key[i]);
+			}
+		}
+
+		int index = HashFunc(fullName);
+		if (table[index].size() == 0)
+		{
+			cout << "Нет такого ФИО" << endl;
+			return void();
+		}
+
+
+		for (auto iter = table[index].begin(); iter != table[index].end(); iter++)
+		{
+			if ((*iter).find(key) != string::npos)
+			{
+				cout << *iter << endl;
+				return void();
+			}
+		}
+		cout << "Нет такого ФИО" << endl;
+		return void();
+	}
+	virtual void del(string key) override
+	{
+		return void();
+	}
+
+};
 
 int main()
 {
 	setlocale(LC_ALL, "ru");
 
-	////cout << TableReading() << endl;
-	//Psevdo_HList a;
-	//a.Push_Back(TableReading());
-
+	//ScanTable a;
+	//a.insert("Куматов Михаил/Англ 4/Матеша 5/Русский 2");
+	//a.find("Петров Иван");
+	//a.del("1");
 	//a.Print();
-	//cout << "---------------------------------------" << endl;
-	//a.Removing("Захаров Алексей");
-	//a.Removing("2");
+	//cout << endl;
+
+	//SortTable a;
+	//a.insert("Куматов Михаил/Англ 4/Матеша 5/Русский 2");
+	//a.find("Петров Иван");
+	//a.del("1");
 	//a.Print();
 
-	ScanTable a;
-	//a.del("2");
-	a.insert("Куматов Михаил/Англ 4/Матеша 5/Русский 2");
+	//cout << HashFunc("ЯЯ") << endl;
+
+	HashTable a;
+	a.find("Абрамов Евгений");
 
 	return 0;
 }
