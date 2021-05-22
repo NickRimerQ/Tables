@@ -1,0 +1,18 @@
+﻿  Main.cpp
+C:\Users\Наталия\source\repos\MyTable2.0\Node_and_Table.h(148,12): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable2.0\Node_and_Table.h(151,13): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable2.0\Node_and_Table.h(162,14): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable2.0\Node_and_Table.h(165,15): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable2.0\Node_and_Table.h(200,14): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable2.0\Node_and_Table.h(203,15): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable2.0\Node_and_Table.h(252,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable2.0\Node_and_Table.h(433,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable2.0\SortTable.h(14,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable2.0\SortTable.h(39,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable2.0\HashTable.h(23,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable2.0\HashTable.h(44,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable2.0\HashTable.h(60,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable2.0\HashTable.h(91,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable2.0\TreeTable.h(232,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Наталия\source\repos\MyTable2.0\TreeTable.h(248,21): warning C4018: '<': signed/unsigned mismatch
+  MyTable2.0.vcxproj -> C:\Users\Наталия\source\repos\MyTable2.0\Debug\MyTable2.0.exe
