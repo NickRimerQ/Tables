@@ -54,7 +54,7 @@ public:
 		return void();
 	}
 
-	virtual void find(string key)
+	virtual void find(string key) override
 	{
 		string fullName = string();
 		for (int i = 0; i < key.length(); i++)

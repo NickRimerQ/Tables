@@ -30,7 +30,7 @@ class TreeTable : public ScanTable
 	node* head;
 
 
-	void swaper(node* first, node* second)
+	void swap_of_leaves(node* first, node* second)
 	{
 		swap(first->key, second->key);
 		swap(first->person, second->person);
@@ -173,7 +173,7 @@ class TreeTable : public ScanTable
 
 					}
 
-					swaper(ins, current);
+					swap_of_leaves(ins, current);
 
 					if (ins->right == current)
 					{

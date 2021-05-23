@@ -626,7 +626,7 @@ public:
 	virtual void insert(string str) = 0;
 	virtual void find(string key) = 0;
 	virtual void del(string key) = 0;
-	//virtual void Prototype(Psevdo_HList& value) // Нужна была чтобы мы увидили что для всех ф-ций из класса предоставляется доступ к private полям Psevdo_HList
+	//virtual void Prototype(Psevdo_HList& value) // Нужна была чтобы мы увидели что для всех ф-ций из класса предоставляется доступ к private полям Psevdo_HList
 	//{
 	//
 	//}
